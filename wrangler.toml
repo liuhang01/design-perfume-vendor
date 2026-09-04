@@ -1,0 +1,15 @@
+name = "design-perfume-vendor"
+main = "worker.js"
+compatibility_date = "2026-09-04"
+
+[assets]
+directory = "."
+binding = "ASSETS"
+
+[[durable_objects.bindings]]
+name = "STATE"
+class_name = "SiteState"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SiteState"]
