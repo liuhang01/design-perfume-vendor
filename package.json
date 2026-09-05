@@ -1,0 +1,13 @@
+{
+  "name": "design-perfume-vendor",
+  "private": true,
+  "version": "1.0.0",
+  "description": "DESIGN PERFUME VENDOR static landing page and Cloudflare Worker",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check worker.js && node --check app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

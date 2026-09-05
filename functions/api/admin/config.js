@@ -1,0 +1,5 @@
+import { getConfig, publicConfig } from '../../lib/config.js';
+import { getCookie, verifySession } from '../../lib/auth.js';
+async function authorized(request, env) { return verifySession(getCookie(request, 'dpv_session'), env.SESSION_SECRET || env.ADMIN_PASSWORD || ''); }
+export async function onRequestGet({ request, env }) { if (!(await authorized(request, env))) return new Response('Unauthorized', { status: 401 }); return new Response(JSON.stringify(await getConfig(env)), { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } }); }
+export async function onRequestPut({ request, env }) { if (!(await authorized(request, env))) return new Response('Unauthorized', { status: 401 }); if (!env.SITE_CONFIG) return new Response('SITE_CONFIG KV binding is missing', { status: 503 }); const value = await request.json(); await env.SITE_CONFIG.put('site-config', JSON.stringify(value)); return new Response(JSON.stringify(publicConfig(value)), { headers: { 'content-type': 'application/json' } }); }

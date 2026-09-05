@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DESIGN PERFUME VENDOR · Admin</title>
+    <link rel="stylesheet" href="styles.css?v=admin1" />
+    <link rel="stylesheet" href="admin.css?v=admin1" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-wrap">
+      <header class="admin-top"><div><p class="eyebrow">PRIVATE CONTROL CENTER</p><h1>Campaign settings</h1><p class="admin-lead">Manage contact channels, FAQ content, and TikTok tracking from one place.</p></div><a class="back-link" href="/">View landing page ↗</a></header>
+      <section class="admin-auth"><label class="field-label" for="admin-token">Admin token</label><input class="text-input mono" id="admin-token" type="password" value="local-preview-token" /><small>Local preview default: <code>local-preview-token</code>. Set <code>ADMIN_TOKEN</code> before production.</small></section>
+      <section class="admin-card"><p class="eyebrow">APPEARANCE</p><h2>Page design</h2><label class="field-label" for="page-bg">Page background image URL</label><input class="text-input" id="page-bg" type="text" placeholder="https://... (leave empty for the default color)" /><p class="admin-hint">Shown behind the whole landing page with a soft light overlay so text stays readable.</p><label class="field-label" for="hero-bg">Hero section background image URL</label><input class="text-input" id="hero-bg" type="text" placeholder="https://... (leave empty for no hero image)" /><p class="admin-hint">Shown behind the avatar, title, and description block as a rounded hero card with a light overlay.</p></section>
+      <section class="admin-card"><div class="admin-card-head"><div><p class="eyebrow">CONTACT CHANNELS</p><h2>Contact channels</h2></div><button class="save-button" id="add-channel" type="button">＋ Add channel</button></div><p class="admin-hint">WhatsApp supports shared round-robin numbers. Other channels use a direct URL. Icons and colors are assigned automatically per platform; each card can also have its own background image.</p><div id="channels-list"></div></section>
+      <section class="admin-card"><div class="admin-card-head"><div><p class="eyebrow">MENU CARDS</p><h2>Menu cards</h2></div><button class="save-button" id="add-menu" type="button">＋ Add menu card</button></div><p class="admin-hint">Cards shown between the contact channels and FAQ (product catalog, social pages, order forms...). The icon is auto-detected from the URL; force one with a keyword: tiktok, instagram, facebook, telegram, email, website, shop, link.</p><div id="menu-list"></div></section>
+      <section class="admin-card"><div class="admin-card-head"><div><p class="eyebrow">FAQ</p><h2>Frequently asked questions</h2></div><button class="save-button" id="add-faq" type="button">＋ Add FAQ</button></div><div id="faq-list-admin"></div></section>
+      <section class="admin-card"><p class="eyebrow">TIKTOK TRACKING</p><h2>Pixel connection</h2><label class="field-label" for="pixel-id">TikTok Pixel ID</label><input class="text-input mono" id="pixel-id" type="text" placeholder="Paste Pixel ID" /><label class="field-label" for="event-set-id">Event Set ID (optional)</label><input class="text-input mono" id="event-set-id" type="text" placeholder="Paste Event Set ID" /><div class="event-list"><div>● PageView <small>auto on page load</small></div><div>● ViewContent <small>landing page view</small></div><div>● Contact <small>WhatsApp click · Events API when token is set</small></div></div></section>
+      <footer class="admin-footer"><button class="secondary-button" id="reload-config" type="button">Reload saved config</button><button class="save-button primary-save" id="save-all" type="button">Save all changes</button><span id="admin-status" role="status"></span></footer>
+    </main>
+    <script src="admin.js?v=admin1"></script>
+  </body>
+</html>

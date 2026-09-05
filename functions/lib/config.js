@@ -1,0 +1,22 @@
+export const DEFAULT_CONFIG = {
+  tiktokPixelId: '',
+  contactChannels: [{ id: 'whatsapp', type: 'whatsapp', label: 'Vendor WhatsApp Contact', subtitle: 'Wholesale support · Direct supplier chat', enabled: true, numbers: ['8618175892307', '17472678379', '17472878638'] }],
+  faq: [
+    { q: 'How can I pay?', a: 'We confirm the order and send the available payment options in WhatsApp. Payment must be completed before dispatch.' },
+    { q: 'How do I place an order?', a: 'Send us the scent, quantity, destination country, and any label or packaging needs. We will reply with availability and a quote.' },
+    { q: 'Where is your warehouse?', a: 'We operate warehouses in California and Texas. Our design perfumes are manufactured by our factory in China and fulfilled locally when available.' },
+    { q: 'What is the MOQ?', a: 'The standard minimum order is 12 units per fragrance. Larger wholesale orders can be quoted separately.' },
+    { q: 'What products do you sell?', a: 'We supply designer-inspired perfume profiles, fragrance oils, gift sets, and selected wholesale options.' },
+    { q: 'How can I sell the products?', a: 'You can sell through TikTok Shop, social media, a boutique, livestreams, or your own online store.' },
+    { q: 'What should I know before ordering?', a: 'Please confirm the scent profile, quantity, destination, shipping cost, lead time, and label requirements before payment.' },
+  ],
+};
+
+export async function getConfig(env) {
+  const stored = env.SITE_CONFIG ? await env.SITE_CONFIG.get('site-config', 'json') : null;
+  return stored ? { ...DEFAULT_CONFIG, ...stored } : DEFAULT_CONFIG;
+}
+
+export function publicConfig(config) {
+  return { tiktokPixelId: config.tiktokPixelId || '', appearance: config.appearance || { backgroundImage: '' }, contactChannels: (config.contactChannels || []).map(({ numbers, ...channel }) => ({ ...channel, ...(channel.type === 'whatsapp' ? { hasNumbers: Boolean(numbers?.length) } : {}) })), menuCards: config.menuCards || [], faq: config.faq || [] };
+}

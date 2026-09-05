@@ -1,0 +1,11 @@
+name = "design-perfume-rotator"
+main = "worker.js"
+compatibility_date = "2026-09-04"
+
+[[durable_objects.bindings]]
+name = "ROTATOR"
+class_name = "WhatsAppRotator"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["WhatsAppRotator"]
