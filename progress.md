@@ -132,3 +132,25 @@
 - `worker.js`：资产 404 拦截清单追加三项。
 
 回滚方式：worker.js 中移除新增的三个拦截项即可。
+
+## 2026-09-05 - Task: 部署上线（GitHub → Cloudflare Workers Builds 自动构建）
+
+### What was done
+- 操控用户 Chrome 确认部署链路：Worker 通过 Cloudflare Workers Builds 连接 GitHub 仓库，push 到 main 自动执行 npx wrangler deploy 构建发布。
+- 本地初始化 git 仓库并对齐远程 main 历史，提交全部更新并推送（1bc3bec：后台面板/外观/菜单卡片/TikTok 像素事件等全部功能；4e1e69c：run_worker_first 安全修复）。
+- GitHub 授权：清除本机残留的其他账号（htrert）过期凭证，经浏览器 OAuth 以 liuhang01 重新授权 Git Credential Manager（sudo 确认由用户本人完成）。
+- 发现并修复线上暴露：Workers 静态资源默认先于 Worker 代码匹配，本次推送引入的新资产（progress.md/config.json/admin.* 等）绕过 404 拦截被公开；wrangler.toml 增加 run_worker_first = true，恢复"所有请求先过 Worker"的架构。
+- 线上验证：新落地页生效（WHOLESALE · FACTORY DIRECT 徽章、TAP TO CONTACT 提示、FAQ 拼写）；/api/config 返回新字段且 WhatsApp 号码脱敏；/progress.md 与 /admin.html 返回 Not found；隐藏后台 /manage-dpv-7f3a9c2e 登录页正常。
+- 待办：线上 Durable Object 存储的生产配置中 tiktokPixelId 仍为空，需登录隐藏后台重新保存配置（Pixel ID：DADABN3C77U70STH52JG 及外观/渠道/菜单卡片）后像素与美化才在线上生效。
+
+### Testing
+- Cloudflare 部署列表确认两次构建均 100% 成功（1b059b8a、4e1e69c）。
+- Chrome 实测线上：落地页新元素可见；progress.md → Not found；admin.html → Not found；/api/config JSON 正常；隐藏后台登录页可访问。
+- 本地 git 工作区干净，与远程 main 同步。
+
+### Notes
+改动文件清单：
+- `wrangler.toml`：[assets] 段新增 run_worker_first = true。
+- `progress.md`：本日志。
+
+回滚方式：git revert 4e1e69c 与 1bc3bec 并推送即可回滚本次部署内容；GitHub 凭证问题可在 Windows 凭据管理器删除 github.com 条目后重新浏览器授权。
