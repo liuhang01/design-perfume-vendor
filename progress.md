@@ -154,3 +154,18 @@
 - `progress.md`：本日志。
 
 回滚方式：git revert 4e1e69c 与 1bc3bec 并推送即可回滚本次部署内容；GitHub 凭证问题可在 Windows 凭据管理器删除 github.com 条目后重新浏览器授权。
+
+## 2026-09-05 - Task: 线上生产配置保存（TikTok Pixel ID 生效）
+
+### What was done
+- 用户登录线上隐藏后台后，将 Pixel ID（DADABN3C77U70STH52JG）填入 TikTok tracking 区并保存成功；线上 /api/config 实测返回该 Pixel ID，TikTok 官方此前"检测不到基础代码"的问题正式闭环。
+- 至此全部上线项完成：新落地页视觉与后台、菜单卡片/渠道/背景图配置能力、Web 像素三事件（PageView/ViewContent/Contact）、内部文件防护。
+
+### Testing
+- Chrome 实测线上 /api/config：tiktokPixelId 返回 DADABN3C77U70STH52JG，appearance/menuCards 字段正常，WhatsApp 号码保持脱敏（hasNumbers）。
+
+### Notes
+改动文件清单：
+- `progress.md`：本日志（仅记录，无代码改动；线上配置存于 Durable Object，不经仓库）。
+
+回滚方式：线上后台清空 Pixel ID 重新保存即可。
